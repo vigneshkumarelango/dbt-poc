@@ -1,0 +1,45 @@
+name: dbt Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  dbt-build:
+    name: "Run DBT Core"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.3'
+
+      - name: Install dbt-core
+        run: |
+          python -m pip install --upgrade pip
+          pip install dbt-core dbt-snowflake  # Replace with dbt-bigquery/dbt-snowflake if needed
+
+      - name: Install dbt dependencies
+        run: dbt deps
+
+      - name: Set up DBT profiles.yml
+        run: |
+          mkdir -p ~/.dbt
+          echo "$DBT_PROFILES_YML" > ~/.dbt/profiles.yml
+        env:
+          DBT_PROFILES_YML: ${{ secrets.DBT_PROFILES_YML }}
+
+      - name: Run dbt seed
+        run: dbt seed --profiles-dir ~/.dbt --target ci
+
+      - name: Run dbt run
+        run: dbt run --profiles-dir ~/.dbt --target ci
+
+      - name: Run dbt test
+        run: dbt test --profiles-dir ~/.dbt --target ci
