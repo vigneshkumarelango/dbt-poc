@@ -36,10 +36,10 @@ jobs:
           DBT_PROFILES_YML: ${{ secrets.DBT_PROFILES_YML }}
 
       - name: Run dbt seed
-        run: dbt seed --profiles-dir ~/.dbt --target ci
+        run: dbt seed --profiles-dir ~/.dbt --target dev
 
       - name: Run dbt run
-        run: dbt run --profiles-dir ~/.dbt --target ci
+        run: dbt run --profiles-dir ~/.dbt --target dev
 
       - name: Run dbt test
-        run: dbt test --profiles-dir ~/.dbt --target ci
+        run: dbt test --profiles-dir ~/.dbt --target dev
