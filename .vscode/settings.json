@@ -1,0 +1,22 @@
+{
+    "sqltools.connections": [
+        {
+            "authenticator": "SNOWFLAKE",
+            "ocspOptions": {
+                "ocspFailOpen": true
+            },
+            "snowflakeOptions": {
+                "clientSessionKeepAlive": true,
+                "clientSessionKeepAliveHeartbeatFrequency": 3600
+            },
+            "previewLimit": 50,
+            "driver": "Snowflake",
+            "name": "snowflake_dev",
+            "account": "XIYTXTY-BW82513",
+            "username": "dbt_develop",
+            "password": "dbtPassword123",
+            "database": "dbt_poc",
+            "warehouse": "DBT_COMPUTE_WH"
+        }
+    ]
+}
